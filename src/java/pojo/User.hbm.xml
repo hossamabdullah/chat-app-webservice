@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 30, 2015 11:13:49 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="pojo.User" table="user" catalog="chatdb">
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="displayName" type="string">
+            <column name="display_name" length="150" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="150" />
+        </property>
+        <property name="mobile" type="string">
+            <column name="mobile" length="30" not-null="true" />
+        </property>
+        <property name="fullName" type="string">
+            <column name="full_name" length="150" />
+        </property>
+        <property name="profileImage" type="string">
+            <column name="profile_image" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="150" not-null="true" />
+        </property>
+        <property name="activated" type="java.lang.Boolean">
+            <column name="activated" />
+        </property>
+        <property name="confirmed" type="java.lang.Boolean">
+            <column name="confirmed" />
+        </property>
+        <set name="usersForBlockingId" table="blocking" inverse="false" lazy="false" fetch="select">
+            <key>
+                <column name="blocked_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="pojo.User">
+                <column name="blocking_id" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="usersForBlockedId" table="blocking" inverse="false" lazy="false" fetch="select">
+            <key>
+                <column name="blocking_id" not-null="true" />
+            </key>
+            <many-to-many entity-name="pojo.User">
+                <column name="blocked_id" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="friendshipsForUserId" table="friendship" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="user_id" not-null="true" />
+            </key>
+            <one-to-many class="pojo.Friendship" />
+        </set>
+        <set name="friendshipsForFriendId" table="friendship" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="friend_id" not-null="true" />
+            </key>
+            <one-to-many class="pojo.Friendship" />
+        </set>
+    </class>
+</hibernate-mapping>

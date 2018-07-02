@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 30, 2015 11:13:49 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="pojo.Friendship" table="friendship" catalog="chatdb">
+        <composite-id name="id" class="pojo.FriendshipId">
+            <key-property name="userId" type="long">
+                <column name="user_id" />
+            </key-property>
+            <key-property name="friendId" type="long">
+                <column name="friend_id" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="userByUserId" class="pojo.User" update="false" insert="false" fetch="select">
+            <column name="user_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="userByFriendId" class="pojo.User" update="false" insert="false" fetch="select">
+            <column name="friend_id" not-null="true" />
+        </many-to-one>
+        <property name="binding" type="boolean">
+            <column name="binding" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
